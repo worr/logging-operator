@@ -85,6 +85,13 @@ var fluentdInputTemplate = `
     pattern ^(.+)$
     tag $1.${tag_parts[0]}.${tag_parts[1]}
   </rule>
+{{- if .LogJobOutput }}
+  <rule>
+    key $.kubernetes.labels.job-name
+    pattern ^(.+)$
+    tag $1.${tag_parts[0]}.${tag_parts[1]}
+  </rule>
+{{- end }}
 </match>
 `
 var fluentdOutputTemplate = `

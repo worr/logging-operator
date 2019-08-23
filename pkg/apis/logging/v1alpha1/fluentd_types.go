@@ -42,6 +42,7 @@ type FluentdSpec struct {
 	Resources           corev1.ResourceRequirements      `json:"resources,omitempty"`
 	ServiceType         corev1.ServiceType               `json:"serviceType,omitempty"`
 	Tolerations         []corev1.Toleration              `json:"tolerations,omitempty"`
+	LogJobOutput        bool                             `json:"logJobOutput"`
 }
 
 // FluentdTLS defines the TLS configs

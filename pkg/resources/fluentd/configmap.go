@@ -35,7 +35,8 @@ type fluentdTLSConfig struct {
 }
 
 type fluentdConfig struct {
-	TLS fluentdTLSConfig
+	TLS          fluentdTLSConfig
+	LogJobOutput bool
 }
 
 func (r *Reconciler) configMap() runtime.Object {
@@ -52,7 +53,10 @@ func (r *Reconciler) configMap() runtime.Object {
 		tlsConfig.KeyFile = "/fluentd/tls/serverKey"
 		tlsConfig.CACertFile = "/fluentd/tls/caCert"
 	}
-	input := fluentdConfig{TLS: tlsConfig}
+	input := fluentdConfig{
+		TLS:          tlsConfig,
+		LogJobOutput: r.Fluentd.Spec.LogJobOutput,
+	}
 	return &corev1.ConfigMap{
 		ObjectMeta: templates.FluentdObjectMeta(configMapName, util.MergeLabels(r.Fluentd.Labels, labelSelector), r.Fluentd),
 		Data: map[string]string{
